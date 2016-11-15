@@ -3,8 +3,13 @@ package lejos.music;
 import java.io.IOException;
 import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
+import lejos.network.BroadcastReceiver;
+import lejos.network.MusicListener;
 
 public class LauncherFollower {
+	
+	static MusicListener listener = new MusicListener();
+	
 	/**
 	 * Starts a robot, according to the pressed button, a different track will be played
 	 * @param args
@@ -38,14 +43,23 @@ public class LauncherFollower {
 		} else if(button == Button.ID_DOWN) {
 			playTrack(contrabass);
 		}
+
+		BroadcastReceiver.getInstance().addListener(listener);
 	}
 	
-	private static void playTrack(Track track) {	
+	private static void playTrack(Track track) {
+		
+		while(!listener.isReady());
+				
 		LCD.clear();
 		LCD.drawString("Playing...", 0, 2);
 		
 		while(!track.isOver()) {
 			LCD.drawString(String.format("%.4f", track.getTime()), 0, 3);
+			
+			if(Math.abs(listener.getLeaderTime()-track.getTime())>0.5){
+				track.setTime(listener.getLeaderTime());
+			}
 			
 			track.play();
 		}
