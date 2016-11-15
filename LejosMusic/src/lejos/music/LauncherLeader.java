@@ -1,8 +1,11 @@
 package lejos.music;
 
 import java.io.IOException;
+import java.net.SocketException;
+
 import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
+import lejos.network.BroadcastManager;
 
 public class LauncherLeader {
 	/**
@@ -40,12 +43,20 @@ public class LauncherLeader {
 		}
 	}
 	
-	private static void playTrack(Track track) {	
+	private static void playTrack(Track track) throws SocketException, IOException {	
 		LCD.clear();
 		LCD.drawString("Playing...", 0, 2);
 		
+		String messageS = "Start";
+		byte[] messageB = new byte[1024];
+		messageB = messageS.getBytes();
+		BroadcastManager.getInstance().broadcast(messageB);
+		
 		while(!track.isOver()) {
 			LCD.drawString(String.format("%.4f", track.getTime()), 0, 3);
+			messageS = Float.toString(track.getTime());
+			messageB = messageS.getBytes();
+			BroadcastManager.getInstance().broadcast(messageB);
 			
 			track.play();
 		}
