@@ -32,6 +32,8 @@ public class LauncherFollower {
 		LCD.clear();
 		LCD.drawString("Follower", 0, 2);
 		
+		BroadcastReceiver.getInstance().addListener(listener);
+		
 		final int button = Button.waitForAnyPress();
 		
 		if(button == Button.ID_UP) {
@@ -43,8 +45,6 @@ public class LauncherFollower {
 		} else if(button == Button.ID_DOWN) {
 			playTrack(contrabass);
 		}
-
-		BroadcastReceiver.getInstance().addListener(listener);
 	}
 	
 	private static void playTrack(Track track) {
@@ -57,7 +57,7 @@ public class LauncherFollower {
 		while(!track.isOver()) {
 			LCD.drawString(String.format("%.4f", track.getTime()), 0, 3);
 			
-			if(Math.abs(listener.getLeaderTime()-track.getTime())>0.5){
+			if(Math.abs(listener.getLeaderTime()-track.getTime())>0.5){  // cette partie du code serait mieux dans un thread qui s'execute régulierement.
 				track.setTime(listener.getLeaderTime());
 			}
 			
