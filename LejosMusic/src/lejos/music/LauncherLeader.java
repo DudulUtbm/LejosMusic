@@ -4,7 +4,7 @@ import java.io.IOException;
 import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
 
-public class Launcher {
+public class LauncherLeader {
 	/**
 	 * Starts a robot, according to the pressed button, a different track will be played
 	 * @param args
@@ -14,15 +14,18 @@ public class Launcher {
 		
 		final TrackReader trackReader = new TrackReader();
 		
-		final Track violin1 = trackReader.read(Launcher.class.getResourceAsStream("/lejos/music/samples/score01/violin1.txt"));
-		final Track violin2 = trackReader.read(Launcher.class.getResourceAsStream("/lejos/music/samples/score01/violin2.txt"));
-		final Track violoncello = trackReader.read(Launcher.class.getResourceAsStream("/lejos/music/samples/score01/violoncello.txt"));
-		final Track contrabass = trackReader.read(Launcher.class.getResourceAsStream("/lejos/music/samples/score01/contrabass.txt"));
+		final Track violin1 = trackReader.read(LauncherLeader.class.getResourceAsStream("/lejos/music/samples/score01/violin1.txt"));
+		final Track violin2 = trackReader.read(LauncherLeader.class.getResourceAsStream("/lejos/music/samples/score01/violin2.txt"));
+		final Track violoncello = trackReader.read(LauncherLeader.class.getResourceAsStream("/lejos/music/samples/score01/violoncello.txt"));
+		final Track contrabass = trackReader.read(LauncherLeader.class.getResourceAsStream("/lejos/music/samples/score01/contrabass.txt"));
 	
 		violin1.setBpm(90);
 		violin2.setBpm(90);
 		violoncello.setBpm(90);
 		contrabass.setBpm(90);
+		
+		LCD.clear();
+		LCD.drawString("Leader", 0, 2);
 		
 		final int button = Button.waitForAnyPress();
 		
