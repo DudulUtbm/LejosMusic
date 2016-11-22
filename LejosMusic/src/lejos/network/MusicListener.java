@@ -34,7 +34,12 @@ public class MusicListener implements BroadcastListener {
 		if (messageS.equals("Start")) {
 			ready = true;
 		} else {
-			leaderTime = Float.valueOf(messageS);
+			try{
+				leaderTime = Float.parseFloat(messageS);
+			} catch (NumberFormatException e) {
+				System.out.println(messageS);
+			}
+			
 		}
 
 	}

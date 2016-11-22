@@ -47,16 +47,12 @@ public class LauncherLeader {
 		LCD.clear();
 		LCD.drawString("Playing...", 0, 2);
 		
-		String messageS = "Start";
-		byte[] messageB = new byte[1024];
-		messageB = messageS.getBytes();
-		BroadcastManager.getInstance().broadcast(messageB);
+		BroadcastManager.getInstance().broadcast("Start".getBytes());
 		
 		while(!track.isOver()) {
 			LCD.drawString(String.format("%.4f", track.getTime()), 0, 3);
-			messageS = Float.toString(track.getTime());
-			messageB = messageS.getBytes();
-			BroadcastManager.getInstance().broadcast(messageB);
+
+			BroadcastManager.getInstance().broadcast(Float.toString(track.getTime()).getBytes());
 			
 			track.play();
 		}
