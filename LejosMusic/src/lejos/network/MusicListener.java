@@ -30,7 +30,8 @@ public class MusicListener implements BroadcastListener {
 	@Override
 	public void onBroadcastReceived(byte[] message) {
 
-		String messageS = message.toString();
+		String messageS = new String(message);
+		System.out.println(messageS);
 		if (messageS.equals("Start")) {
 			ready = true;
 		} else {

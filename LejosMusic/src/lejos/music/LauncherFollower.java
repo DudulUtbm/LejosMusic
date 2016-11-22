@@ -49,7 +49,7 @@ public class LauncherFollower {
 	
 	private static void playTrack(Track track) {
 		
-		while(!listener.isReady());
+//		while(!listener.isReady());
 				
 		LCD.clear();
 		LCD.drawString("Playing...", 0, 2);
